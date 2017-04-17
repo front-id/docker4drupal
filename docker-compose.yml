@@ -43,9 +43,23 @@ services:
       # PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
       # PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
     volumes:
-      - codebase:/var/www
+      - ../:/var/www
 #      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
 
+  apache2:
+    image: webdevops/apache-dev:latest
+    environment:
+      WEB_PHP_SOCKET: php:9000
+      WEB_DOCUMENT_ROOT: /var/www/drupal/web
+    depends_on:
+      - php
+    volumes:
+      - ../:/var/www
+    labels:
+      - 'traefik.backend=apache2'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:apache.drupal.docker.localhost'
+    
   nginx:
 # wodby/drupal-nginx:[DRUPAL_VERSION]-[NGINX_VERSION]-[STABILITY_TAG].
     image: wodby/drupal-nginx:8-1.10-2.1.0
@@ -59,7 +73,7 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/drupal/web
     volumes:
-      - codebase:/var/www
+      - ../:/var/www
 #      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
     labels:
       - 'traefik.backend=nginx'
@@ -138,7 +152,7 @@ services:
     command: -c /dev/null --web --docker --logLevel=INFO
     ports:
       - '8000:80'
-#      - '8080:8080' # Dashboard
+      - '8080:8080' # Dashboard
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -146,6 +160,3 @@ services:
 #volumes:
 #  docker-sync-unison:
 #    external: true
-
-volumes:
-  codebase: ../
