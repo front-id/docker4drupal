@@ -2,6 +2,7 @@ version: "2"
 
 services:
   mariadb:
+    container_name: projectname_db
     image: wodby/mariadb:10.1-2.1.0
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -22,6 +23,7 @@ services:
 #      - /path/to/mariadb/data/on/host:/var/lib/mysql # I want to manage volumes manually.
 
   php:
+    container_name: projectname_php
 # 1. Images with vanilla Drupal – wodby/drupal:[DRUPAL_VERSION]-[PHP_VERSION]-[STABILITY_TAG].
     image: wodby/drupal:8-7.1-2.1.0
 #    image: wodby/drupal:8-7.0-2.1.0
@@ -41,7 +43,7 @@ services:
       PHP_XDEBUG: 1
       PHP_XDEBUG_DEFAULT_ENABLE: 1
       PHP_XDEBUG_REMOTE_AUTOSTART: 1
-      DB_HOST: mariadb
+      DB_HOST: projectname_db
       DB_USER: drupal
       DB_PASSWORD: drupal
       DB_NAME: drupal
@@ -53,6 +55,7 @@ services:
 #      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
 
   apache2:
+    container_name: projectname_apache2
     image: webdevops/apache-dev:latest
     environment:
       WEB_PHP_SOCKET: php:9000
@@ -62,11 +65,12 @@ services:
     volumes:
       - ../:/var/www
     labels:
-      - 'traefik.backend=apache2'
+      - 'traefik.backend=projectname_apache2'
       - 'traefik.port=80'
       - 'traefik.frontend.rule=Host:apache.drupal.docker.localhost'
     
   nginx:
+    container_name: projectname_nginx
 # wodby/drupal-nginx:[DRUPAL_VERSION]-[NGINX_VERSION]-[STABILITY_TAG].
     image: wodby/drupal-nginx:8-1.10-2.1.0
 #    image: wodby/drupal-nginx:7-1.10-2.1.0
@@ -82,40 +86,44 @@ services:
       - ../:/var/www
 #      - docker-sync-unison:/var/www/html # Docker-sync for macOS users
     labels:
-      - 'traefik.backend=nginx'
+      - 'traefik.backend=projectname_nginx'
       - 'traefik.port=80'
       - 'traefik.frontend.rule=Host:drupal.docker.localhost'
 
 #  varnish:
+#    container_name: projectname_varnish
 #    image: wodby/drupal-varnish:4.1-2.1.0
 #    depends_on:
 #      - nginx
 #    environment:
 #      VARNISH_SECRET: secret
-#      VARNISH_BACKEND_HOST: nginx
+#      VARNISH_BACKEND_HOST: projectname_nginx
 #      VARNISH_BACKEND_PORT: 80
 #    labels:
-#      - 'traefik.backend=varnish'
+#      - 'traefik.backend=projectname_varnish'
 #      - 'traefik.port=6081'
 #      - 'traefik.frontend.rule=Host:varnish.drupal.docker.localhost'
 
 #  redis:
+#    container_name: projectname_redis
 #    image: wodby/redis:3.2-2.1.0
 
 #  pma:
+#    container_name: projectname_pma  
 #    image: phpmyadmin/phpmyadmin
 #    environment:
-#      PMA_HOST: mariadb
+#      PMA_HOST: projectname_db
 #      PMA_USER: drupal
 #      PMA_PASSWORD: drupal
 #      PHP_UPLOAD_MAX_FILESIZE: 1G
 #      PHP_MAX_INPUT_VARS: 1G
 #    labels:
-#      - 'traefik.backend=pma'
+#      - 'traefik.backend=projectname_pma'
 #      - 'traefik.port=80'
 #      - 'traefik.frontend.rule=Host:pma.drupal.docker.localhost'
 
 #  solr:
+#    container_name: projectname_solr  
 ## wodby/drupal-solr:[DRUPAL_VERSION]-[SOLR_VERSION]-[STABILITY_TAG].
 #    image: wodby/drupal-solr:8-6.4-2.0.0
 ##    image: wodby/drupal-solr:8-6.3-2.0.0
@@ -126,22 +134,24 @@ services:
 #    environment:
 #      SOLR_HEAP: 1024m
 #    labels:
-#      - 'traefik.backend=solr'
+#      - 'traefik.backend=projectname_solr'
 #      - 'traefik.port=8983'
 #      - 'traefik.frontend.rule=Host:solr.drupal.docker.localhost'
 
   mailhog:
+    container_name: projectname_mailhog
     image: mailhog/mailhog
     labels:
-      - 'traefik.backend=mailhog'
+      - 'traefik.backend=projectname_mailhog'
       - 'traefik.port=8025'
       - 'traefik.frontend.rule=Host:mailhog.drupal.docker.localhost'
 
 #  node:
+#    container_name: projectname_node
 #    image: node:7-alpine
 #    working_dir: /app
 #    labels:
-#      - 'traefik.backend=node'
+#      - 'traefik.backend=projectname_node'
 #      - 'traefik.port=3000'
 #      - 'traefik.frontend.rule=Host:front.drupal.docker.localhost'
 #    expose:
@@ -151,6 +161,7 @@ services:
 #    command: sh -c 'npm install && npm run start'
 
 #  memcached:
+#    container_name: projectname_memcached  
 #    image: wodby/memcached:1.4-2.0.0
 
   traefik:
