@@ -67,7 +67,7 @@ services:
     labels:
       - 'traefik.backend=projectname_apache2'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:apache.drupal.docker.localhost'
+      - 'traefik.frontend.rule=Host:apache.drupal.docker.localhost,back.apache.drupal.docker.localhost'
     
   nginx:
     container_name: projectname_nginx
@@ -88,7 +88,7 @@ services:
     labels:
       - 'traefik.backend=projectname_nginx'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:drupal.docker.localhost'
+      - 'traefik.frontend.rule=Host:drupal.docker.localhost,back.drupal.docker.localhost'
 
 #  varnish:
 #    container_name: projectname_varnish
