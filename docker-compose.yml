@@ -108,19 +108,19 @@ services:
 #    container_name: projectname_redis
 #    image: wodby/redis:3.2-2.1.0
 
-#  pma:
-#    container_name: projectname_pma  
-#    image: phpmyadmin/phpmyadmin
-#    environment:
-#      PMA_HOST: projectname_db
-#      PMA_USER: drupal
-#      PMA_PASSWORD: drupal
-#      PHP_UPLOAD_MAX_FILESIZE: 1G
-#      PHP_MAX_INPUT_VARS: 1G
-#    labels:
-#      - 'traefik.backend=projectname_pma'
-#      - 'traefik.port=80'
-#      - 'traefik.frontend.rule=Host:pma.drupal.docker.localhost'
+  pma:
+    container_name: projectname_pma  
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: projectname_db
+      PMA_USER: drupal
+      PMA_PASSWORD: drupal
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    labels:
+      - 'traefik.backend=projectname_pma'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:pma.drupal.docker.localhost'
 
 #  solr:
 #    container_name: projectname_solr  
