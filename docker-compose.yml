@@ -67,7 +67,7 @@ services:
     labels:
       - 'traefik.backend=projectname_apache2'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:apache.drupal.docker.localhost,Host:back.apache.drupal.docker.localhost'
+      - 'traefik.frontend.rule=HostRegexp:apache.projectname.docker.localhost, {subdomain:[^.]+}.apache.projectname.docker.localhost'
     
   nginx:
     container_name: projectname_nginx
@@ -88,7 +88,7 @@ services:
     labels:
       - 'traefik.backend=projectname_nginx'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:drupal.docker.localhost,Host:back.drupal.docker.localhost'
+      - 'traefik.frontend.rule=HostRegexp:projectname.docker.localhost, {subdomain:[^.]+}.projectname.docker.localhost'
 
 #  varnish:
 #    container_name: projectname_varnish
@@ -102,7 +102,7 @@ services:
 #    labels:
 #      - 'traefik.backend=projectname_varnish'
 #      - 'traefik.port=6081'
-#      - 'traefik.frontend.rule=Host:varnish.drupal.docker.localhost'
+#      - 'traefik.frontend.rule=Host:varnish.projectname.docker.localhost'
 
 #  redis:
 #    container_name: projectname_redis
@@ -120,7 +120,7 @@ services:
     labels:
       - 'traefik.backend=projectname_pma'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:pma.drupal.docker.localhost'
+      - 'traefik.frontend.rule=Host:pma.projectname.docker.localhost'
 
 #  solr:
 #    container_name: projectname_solr  
@@ -136,7 +136,7 @@ services:
 #    labels:
 #      - 'traefik.backend=projectname_solr'
 #      - 'traefik.port=8983'
-#      - 'traefik.frontend.rule=Host:solr.drupal.docker.localhost'
+#      - 'traefik.frontend.rule=Host:solr.projectname.docker.localhost'
 
   mailhog:
     container_name: projectname_mailhog
@@ -144,7 +144,7 @@ services:
     labels:
       - 'traefik.backend=projectname_mailhog'
       - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mailhog.drupal.docker.localhost'
+      - 'traefik.frontend.rule=Host:mailhog.projectname.docker.localhost'
 
 #  node:
 #    container_name: projectname_node
@@ -153,7 +153,7 @@ services:
 #    labels:
 #      - 'traefik.backend=projectname_node'
 #      - 'traefik.port=3000'
-#      - 'traefik.frontend.rule=Host:front.drupal.docker.localhost'
+#      - 'traefik.frontend.rule=Host:front.projectname.docker.localhost'
 #    expose:
 #      - "3000"
 #    volumes:
