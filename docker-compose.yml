@@ -67,7 +67,7 @@ services:
     labels:
       - 'traefik.backend=projectname_apache2'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=HostRegexp:apache.projectname.docker.localhost, {subdomain:[^.]+}.apache.projectname.docker.localhost'
+      - 'traefik.frontend.rule=HostRegexp:projectname.apache.localhost, {subdomain:[^.]+}.projectname.apache.localhost'
     
   nginx:
     container_name: projectname_nginx
@@ -88,7 +88,7 @@ services:
     labels:
       - 'traefik.backend=projectname_nginx'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=HostRegexp:projectname.docker.localhost, {subdomain:[^.]+}.projectname.docker.localhost'
+      - 'traefik.frontend.rule=HostRegexp:projectname.localhost, {subdomain:[^.]+}.projectname.localhost'
 
 #  varnish:
 #    container_name: projectname_varnish
@@ -102,7 +102,7 @@ services:
 #    labels:
 #      - 'traefik.backend=projectname_varnish'
 #      - 'traefik.port=6081'
-#      - 'traefik.frontend.rule=Host:varnish.projectname.docker.localhost'
+#      - 'traefik.frontend.rule=Host:projectname.varnish.localhost, {subdomain:[^.]+}.projectname.varnish.localhost'
 
 #  redis:
 #    container_name: projectname_redis
@@ -120,7 +120,7 @@ services:
     labels:
       - 'traefik.backend=projectname_pma'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:pma.projectname.docker.localhost'
+      - 'traefik.frontend.rule=Host:projectname.pma.localhost'
 
 #  solr:
 #    container_name: projectname_solr  
@@ -136,7 +136,7 @@ services:
 #    labels:
 #      - 'traefik.backend=projectname_solr'
 #      - 'traefik.port=8983'
-#      - 'traefik.frontend.rule=Host:solr.projectname.docker.localhost'
+#      - 'traefik.frontend.rule=Host:projectname.solr.localhost'
 
   mailhog:
     container_name: projectname_mailhog
@@ -144,7 +144,7 @@ services:
     labels:
       - 'traefik.backend=projectname_mailhog'
       - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mailhog.projectname.docker.localhost'
+      - 'traefik.frontend.rule=Host:projectname.mailhog.localhost'
 
 #  node:
 #    container_name: projectname_node
@@ -153,7 +153,7 @@ services:
 #    labels:
 #      - 'traefik.backend=projectname_node'
 #      - 'traefik.port=3000'
-#      - 'traefik.frontend.rule=Host:front.projectname.docker.localhost'
+#      - 'traefik.frontend.rule=Host:projectname.front.localhost, {subdomain:[^.]+}.projectname.front.localhost'
 #    expose:
 #      - "3000"
 #    volumes:
