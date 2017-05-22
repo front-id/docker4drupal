@@ -12,6 +12,8 @@ services:
   php:
     image: $DRUPAL7_PHP70
     environment:
+      # To skip auto init.
+      DRUPAL_VERSION: 7
       PHP_SENDMAIL_PATH: '/bin/true'
     volumes:
       - codebase:/var/www/html
@@ -28,7 +30,6 @@ services:
       NGINX_SERVER_ROOT: /var/www/html/web
     volumes:
       - codebase:/var/www/html
-    restart: unless-stopped
     depends_on:
       - php
 
