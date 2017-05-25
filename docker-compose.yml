@@ -1,37 +1,37 @@
 version: "2"
 
 services:
-  mariadb:
-    container_name: projectname_db
-    image: wodby/mariadb:10.1-2.1.0
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: drupal
-      MYSQL_USER: drupal
-      MYSQL_PASSWORD: drupal
-# Improved performance: check https://dba.stackexchange.com/questions/83125/mysql-any-way-to-import-a-huge-32-gb-sql-dump-faster
-      MYSQL_INNODB_BUFFER_POOL_SIZE: 2G
-      MYSQL_INNODB_LOG_BUFFER_SIZE: 256M
-      MYSQL_INNODB_LOG_FILE_SIZE: 1G
-      MYSQL_INNODB_WRITE_IO_THREADS: 16
-      MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT: 0
-#    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
-    volumes:
-      - ../mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
-      - ../storage:/var/lib/mysql # I want to manage volumes manually.
-#      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
-#      - /path/to/mariadb/data/on/host:/var/lib/mysql # I want to manage volumes manually.
-
-#  postgresdb:
-#    container_name: projectname_pg_db
-#    image: postgres:alpine
+#  mariadb:
+#    container_name: projectname_db
+#    image: wodby/mariadb:10.1-2.1.0
 #    environment:
-#      POSTGRES_PASSWORD: drupal
-#      POSTGRES_USER: drupal
-#      POSTGRES_DB: drupal
-#      PGDATA: /var/lib/postgresql/data/pgdata
+#      MYSQL_ROOT_PASSWORD: password
+#      MYSQL_DATABASE: drupal
+#      MYSQL_USER: drupal
+#      MYSQL_PASSWORD: drupal
+## Improved performance: check https://dba.stackexchange.com/questions/83125/mysql-any-way-to-import-a-huge-32-gb-sql-dump-faster
+#      MYSQL_INNODB_BUFFER_POOL_SIZE: 2G
+#      MYSQL_INNODB_LOG_BUFFER_SIZE: 256M
+#      MYSQL_INNODB_LOG_FILE_SIZE: 1G
+#      MYSQL_INNODB_WRITE_IO_THREADS: 16
+#      MYSQL_INNODB_FLUSH_LOG_AT_TRX_COMMIT: 0
+##    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
 #    volumes:
-#      - ../storage/postgres:/var/lib/postgresql/data/pgdata
+#      - ../mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+#      - ../storage:/var/lib/mysql # I want to manage volumes manually.
+##      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+##      - /path/to/mariadb/data/on/host:/var/lib/mysql # I want to manage volumes manually.
+
+  postgresdb:
+    container_name: projectname_pg_db
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: drupal
+      POSTGRES_USER: drupal
+      POSTGRES_DB: drupal
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ../storage/postgres:/var/lib/postgresql/data/pgdata
 
   php:
     container_name: projectname_php
