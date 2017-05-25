@@ -32,7 +32,8 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ../storage/postgres:/var/lib/postgresql/data/pgdata
-
+      - ../:/root
+      
   php:
     container_name: projectname_php
 # 1. Images with vanilla Drupal – wodby/drupal:[DRUPAL_VERSION]-[PHP_VERSION]-[STABILITY_TAG].
