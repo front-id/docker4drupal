@@ -2,9 +2,8 @@ To fix Docker [poor performance](https://github.com/Wodby/docker4drupal/issues/4
 
 ### Installation
 
-```
-gem install docker-sync
-brew install fswatch
+```bash
+$ gem install docker-sync
 ```
 
 ### Usage
